@@ -357,7 +357,7 @@ def ffmpeg_concat_segments_to_mp4(input_files, cache_key=None):
   try:
     subprocess.run(
       ["ffmpeg", "-hide_banner", "-loglevel", "error", "-f", "concat", "-safe", "0",
-       "-i", str(list_file), "-c", "copy", "-movflags", "faststart", "-y", str(cache_path)],
+       "-i", str(list_file), "-c", "copy", "-tag:v", "hvc1", "-movflags", "faststart", "-y", str(cache_path)],
       check=True
     )
   except subprocess.CalledProcessError:
@@ -407,7 +407,7 @@ def ffmpeg_mp4_wrap_process_builder(filename):
     return open(cache_path, "rb")
 
   try:
-    subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", str(input_path), "-c", "copy", "-movflags", "faststart", "-y", str(cache_path)], check=True)
+    subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", str(input_path), "-c", "copy", "-tag:v", "hvc1", "-movflags", "faststart", "-y", str(cache_path)], check=True)
   except subprocess.CalledProcessError:
     try:
       subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", str(input_path), "-c:v", "libx264", "-movflags", "faststart", "-y", str(cache_path)], check=True)
